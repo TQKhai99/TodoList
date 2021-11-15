@@ -1,9 +1,8 @@
-import {ADD_TODO, EDIT_TODO, DELETE_TODO, COMPLETE_TODO} from "./actionTypes";
+import {ADD_TODO, DELETE_TODO, COMPLETE_TODO} from "./actionTypes";
 
 const local = JSON.parse(localStorage.getItem("todos"));
 const initState = {
-    todos : local || [],
-    isEdit: {id: null, text: ""}
+    todos : local || []
 }
 
 const todoReducer = (state = initState, action) => {

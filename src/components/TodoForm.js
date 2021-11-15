@@ -10,8 +10,7 @@ const TodoForm = ({addTodo}) => {
   };
 
   const add = () => {
-    let id = Math.floor(Math.random() * 10000); 
-    addTodo({id: id, text: input});
+    addTodo({id: Math.floor(Math.random() * 10000), text: input});
     setInput("");
   }
 
@@ -28,6 +27,7 @@ const TodoForm = ({addTodo}) => {
               Add todo
             </button>
           </div>
+      
   );
 }
 

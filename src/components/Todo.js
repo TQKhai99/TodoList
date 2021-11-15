@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { completeTodo, deleteTodo } from '../redux/actions';
 
 const Todo = ({todos, completeTodo, deleteTodo}) => {
-
   return todos.map((todo, index) => (
     <div
       className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
@@ -24,8 +23,7 @@ const Todo = ({todos, completeTodo, deleteTodo}) => {
 };
 
 const mapStateToProps = state => {
-  const todos = state.todos;
-  return {todos};
+  return {todos: state.todos};
 }
 
 export default connect(mapStateToProps, {completeTodo, deleteTodo})(Todo);
