@@ -1,8 +1,9 @@
-import {ADD_TODO, DELETE_TODO, COMPLETE_TODO} from "./actionTypes";
+import {ADD_TODO, EDIT_TODO, RENDER_EDIT, DELETE_TODO, COMPLETE_TODO} from "./actionTypes";
 
 const local = JSON.parse(localStorage.getItem("todos"));
 const initState = {
-    todos : local || []
+    todos : local || [],
+    edit : {id: null, newValue: ""}
 }
 
 const todoReducer = (state = initState, action) => {
@@ -19,6 +20,31 @@ const todoReducer = (state = initState, action) => {
                 ...state,
                 todos: todos
             };
+        }
+        case EDIT_TODO: {
+            const {id, newValue} = action.payload;
+            let todos = state.todos;
+            if(newValue) {
+                todos = todos.map(todo => {
+                    if(todo.id === id){
+                        todo.text = newValue;
+                    }
+                    return todo;
+                })
+            }
+            localStorage.setItem("todos", JSON.stringify(todos));
+            return {
+                ...state,
+                edit: {id: null, newValue: ""},
+                todos: todos
+            }
+        }
+        case RENDER_EDIT:{
+            const {id, newValue} = action.payload;
+            return {
+                ...state,
+                edit: {id: id, newValue: newValue}
+            }
         }
         case DELETE_TODO: {
             const {id} = action.payload;

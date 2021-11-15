@@ -1,1 +1,0 @@
-export const getTodoState = store => store.todos;
