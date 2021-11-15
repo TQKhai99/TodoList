@@ -1,24 +1,9 @@
-import React, { useState } from 'react';
-import TodoForm from './TodoForm';
+import React from 'react';
 import { RiDeleteBack2Line, RiEdit2Line } from 'react-icons/ri';
+import { connect } from 'react-redux';
+import { completeTodo, deleteTodo } from '../redux/actions';
 
-const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
-  const [edit, setEdit] = useState({
-    id: null,
-    value: ''
-  });
-
-  const submitUpdate = value => {
-    updateTodo(edit.id, value);
-    setEdit({
-      id: null,
-      value: ''
-    });
-  };
-
-  if (edit.id) {
-    return <TodoForm edit={edit} onSubmit={submitUpdate} />;
-  }
+const Todo = ({todos, completeTodo, deleteTodo}) => {
 
   return todos.map((todo, index) => (
     <div
@@ -29,12 +14,8 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
         {todo.text}
       </div>
       <div className='icons'>
-        <RiEdit2Line
-          onClick={() => setEdit({ id: todo.id, value: todo.text })}
-          className='edit-icon'
-        />
         <RiDeleteBack2Line
-          onClick={() => removeTodo(todo.id)}
+          onClick={() => deleteTodo(todo.id)}
           className='delete-icon'
         />
       </div>
@@ -42,4 +23,9 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
   ));
 };
 
-export default Todo;
+const mapStateToProps = state => {
+  const todos = state.todos;
+  return {todos};
+}
+
+export default connect(mapStateToProps, {completeTodo, deleteTodo})(Todo);
